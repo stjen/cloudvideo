@@ -1,0 +1,26 @@
+{
+ "options": [
+  [
+   "restinio:asio",
+   "standalone"
+  ],
+  [
+   "restinio:with_openssl",
+   "False"
+  ],
+  [
+   "restinio:with_pcre",
+   "None"
+  ],
+  [
+   "restinio:with_zlib",
+   "False"
+  ]
+ ],
+ "root": {
+  "name": null,
+  "version": null,
+  "user": null,
+  "channel": null
+ }
+}
