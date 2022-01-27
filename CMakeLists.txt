@@ -69,7 +69,8 @@ target_include_directories(worker
 add_executable(test
     src/test/main.cpp
     ${COMPONENTS_DIR}/kafka_helpers/kafka_consumer.cpp
-    ${COMPONENTS_DIR}/kafka_helpers/kafka_producer.cpp)
+    ${COMPONENTS_DIR}/kafka_helpers/kafka_producer.cpp
+    ${COMPONENTS_DIR}/authbe/auth_backend.cpp)
 
 target_include_directories(test
     PRIVATE

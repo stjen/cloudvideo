@@ -8,6 +8,7 @@
 #include <thread>
 #include <unistd.h>
 #include <util/atomic_queue.h>
+#include <authbe/auth_backend.h>
 
 std::atomic<bool> stopProducingFlag = false;
 
@@ -16,7 +17,8 @@ void got_signal(int) {
   stopProducingFlag.store(true);
 }
 
-int main(int argc, char **argv) {
+void testSendingJobs() {
+
 
   struct sigaction sa;
   memset(&sa, 0, sizeof(sa));
@@ -42,4 +44,15 @@ int main(int argc, char **argv) {
     std::cout << "sending: " << job << std::endl;
     jobQueue.push(job);
   }
+
+}
+
+void testAPIToken() {
+
+}
+
+int main(int argc, char **argv) {
+  auto authBe = authbe::AuthBackend();
+  std::cout << authBe.generateAPIToken("user1") << std::endl;
+  std::cout << authBe.generateAPIToken("user2") << std::endl;
 }
