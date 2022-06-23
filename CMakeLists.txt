@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
 project (cloud)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
-# Included the conan build information
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
-
+find_package(fmt CONFIG REQUIRED)
+find_package(CapnProto CONFIG REQUIRED)
+find_package(RdKafka CONFIG REQUIRED)
+find_package(PkgConfig)
+pkg_check_modules(Pistache REQUIRED IMPORTED_TARGET libpistache)
 
 #---------------------------
 # Check modern-cpp-kafka library
@@ -32,9 +33,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 target_link_libraries(cloudcontroller
     PRIVATE
-        CONAN_PKG::pistache
-        CONAN_PKG::fmt
-        CONAN_PKG::capnproto
+        fmt::fmt-header-only
+        PkgConfig::Pistache
+        CapnProto::capnp
 )
 
 # Add an executable
@@ -47,10 +48,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 target_link_libraries(worker
     PRIVATE
-        CONAN_PKG::pistache
-        CONAN_PKG::fmt
-        CONAN_PKG::capnproto
-        CONAN_PKG::librdkafka
+    RdKafka::rdkafka RdKafka::rdkafka++
+        fmt::fmt-header-only
+        PkgConfig::Pistache
+        CapnProto::capnp
 )
 
 # Include for all targets
@@ -78,8 +79,8 @@ target_include_directories(test
 
 target_link_libraries(test
     PRIVATE
-        CONAN_PKG::pistache
-        CONAN_PKG::fmt
-        CONAN_PKG::capnproto
-        CONAN_PKG::librdkafka
+        fmt::fmt-header-only
+        CapnProto::capnp
+        PkgConfig::Pistache
+        RdKafka::rdkafka RdKafka::rdkafka++
 )

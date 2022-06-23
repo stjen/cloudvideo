@@ -9,16 +9,15 @@
         {
             "label": "build all",
             "type": "shell",
-            "command": "make -j",
+            "command": "make -j -C build/",
             "options": {
-                "cwd": "${workspaceFolder}/build"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
             ],
             "dependsOn": [
                 "_cmake_setup",
-                "_conan_setup"
             ],
             "group": {
                 "kind": "build",
@@ -28,7 +27,7 @@
         {
             "label": "clean all",
             "type": "shell",
-            "command": "rm -rf *",
+            "command": "rm -rf build/",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
@@ -41,24 +40,11 @@
             }
         },
         {
-            "label": "Clean builds",
-            "type": "shell",
-            "command": "rm -rf build/*"
-        },
-        {
             "label": "_cmake_setup",
             "type": "shell",
-            "command": "cmake -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} -DCMAKE_BUILD_TYPE=Debug ..",
+            "command": "cmake -DCMAKE_BUILD_TYPE=build -B build -S . \"-DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake\"",
             "options": {
-                "cwd": "${workspaceFolder}/build"
-            }
-        },
-        {
-            "label": "_conan_setup",
-            "type": "shell",
-            "command": "conan install ..",
-            "options": {
-                "cwd": "${workspaceFolder}/build"
+                "cwd": "${workspaceFolder}"
             }
         },
         {
